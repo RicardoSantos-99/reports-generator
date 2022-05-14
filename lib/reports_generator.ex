@@ -1,5 +1,9 @@
 defmodule ReportsGenerator do
-  def hello do
-    "Hello from ReportsGenerator"
+
+  def build(filename) do
+    case file = File.read("reports/#{filename}") do
+      {:ok, result} -> result
+      {:error, reason} -> reason
+    end
   end
 end

@@ -55,4 +55,45 @@ defmodule ReportsGeneratorTest do
       assert response == expect_response
     end
   end
+
+  describe "fetch_higher_cost/2" do
+    test "when the option is 'users', return the user who spend the most" do
+      file_name = "report_test.csv"
+
+      response =
+        file_name
+        |> ReportsGenerator.build()
+        |> ReportsGenerator.fetch_higher_cost("users")
+
+      expect_response = {:ok, {"5", 49}}
+
+      assert response == expect_response
+    end
+
+    test "when the option is 'foods', returns the most consumed food" do
+      file_name = "report_test.csv"
+
+      response =
+        file_name
+        |> ReportsGenerator.build()
+        |> ReportsGenerator.fetch_higher_cost("foods")
+
+      expect_response = {:ok, {"esfirra", 3}}
+
+      assert response == expect_response
+    end
+
+    test "when the invalid option is given, returns an error" do
+      file_name = "report_test.csv"
+
+      response =
+        file_name
+        |> ReportsGenerator.build()
+        |> ReportsGenerator.fetch_higher_cost("error")
+
+      expect_response = {:error, "Invalid option!"}
+
+      assert response == expect_response
+    end
+  end
 end
